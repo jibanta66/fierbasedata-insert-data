@@ -10,28 +10,33 @@ import {
   doc,
 } from "firebase/firestore";
 
+//APP FUNCTION                                 
+
+
 function App() {
   const [newName, setNewName] = useState("");
   const [newAge, setNewAge] = useState(0);
 
   const [users, setUsers] = useState([]);
-  const usersCollectionRef = collection(db, "users");
+  const usersCollectionRef = collection(db, "users"); //USER DTABASE
+
+  // ADD IN DATABASE BY CALLING USERCOLLECTIONREF
 
   const createUser = async () => {
     await addDoc(usersCollectionRef, { name: newName, age: Number(newAge) });
   };
-
+ // UPDATE FROM USR
   const updateUser = async (id, age) => {
     const userDoc = doc(db, "users", id);
     const newFields = { age: age + 1 };
     await updateDoc(userDoc, newFields);
   };
-
+// DELETE FROM USR
   const deleteUser = async (id) => {
     const userDoc = doc(db, "users", id);
     await deleteDoc(userDoc);
   };
-
+// DISPLAY USER ID
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
